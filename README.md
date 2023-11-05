@@ -37,5 +37,5 @@ Run project in your localhost:
 npm start
 ```
 
-[picture1]: ./images/picture1.png
-[picture2]: ./images/picture2.png
+[picture1]: ./src/images/picture1.png
+[picture2]: ./src/images/picture2.png
