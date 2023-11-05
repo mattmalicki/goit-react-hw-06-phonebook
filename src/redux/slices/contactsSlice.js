@@ -1,32 +1,45 @@
 import { createSlice, nanoid } from '@reduxjs/toolkit';
 
-const contactsSample = [
-  { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-  { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-  { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-  { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-];
+import { loadStorage, saveStorage } from 'services/localStorage';
+
+const fromLocalStorage = loadStorage('contacts');
+
+const addToStorage = contact => {
+  const fromStorage = loadStorage('contacts');
+  saveStorage('contacts', fromStorage ? [...fromStorage, contact] : [contact]);
+};
+
+const deleteFromStorage = id => {
+  const fromStorage = loadStorage('contacts');
+  saveStorage(
+    'contacts',
+    fromStorage.filter(contact => contact.id !== id)
+  );
+};
 
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState: contactsSample,
+  initialState: fromLocalStorage ? fromLocalStorage : [],
   reducers: {
     addContact: {
       reducer(state, action) {
         state.push(action.payload);
       },
       prepare(contact) {
+        const id = nanoid();
+        addToStorage({ ...contact, id });
         return {
           payload: {
-            id: nanoid(),
-            contactName: contact.name,
-            contactNumber: contact.number,
+            id: id,
+            name: contact.name,
+            number: contact.number,
           },
         };
       },
     },
     deleteContact(state, action) {
-      const index = state.findIndex(task => task.id === action.payload);
+      deleteFromStorage(action.payload);
+      const index = state.findIndex(contact => contact.id === action.payload);
       state.splice(index, 1);
     },
   },
