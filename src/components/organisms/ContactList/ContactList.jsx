@@ -3,8 +3,6 @@ import { getContacts } from 'redux/selectors';
 
 import { ContactListItem } from 'components/molecules/ContactListItem/ContactListItem';
 
-import PropTypes from 'prop-types';
-
 import styles from './ContactList.module.css';
 
 export const ContactList = () => {
@@ -17,15 +15,4 @@ export const ContactList = () => {
       ))}
     </ul>
   );
-};
-
-ContactList.propTypes = {
-  onClick: PropTypes.func,
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      name: PropTypes.string,
-      phone: PropTypes.string,
-    })
-  ),
 };
