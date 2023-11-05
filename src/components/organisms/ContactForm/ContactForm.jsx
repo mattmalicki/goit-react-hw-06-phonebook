@@ -1,13 +1,27 @@
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { addContact } from 'redux/slices/contactsSlice';
+
 import { Form } from 'components/atoms/Form/Form';
+import { Label } from 'components/atoms/Label/Label';
 import { Input } from 'components/atoms/Input/Input';
 import { Button } from 'components/atoms/Button/Button';
-import { Label } from 'components/atoms/Label/Label';
+
+import PropTypes from 'prop-types';
+
 import styles from './ContactForm.module.css';
 
-export const ContactForm = ({ onSubmit }) => {
+export const ContactForm = () => {
+  const dispatch = useDispatch();
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    dispatch(addContact({ name: form.name.value, number: form.number.value }));
+    form.reset();
+  };
+
   return (
-    <Form onSubmit={onSubmit} className={styles.contactForm}>
+    <Form onSubmit={handleSubmit} className={styles.contactForm}>
       <Label name="name" className={styles.contactLabel}>
         Name
       </Label>
