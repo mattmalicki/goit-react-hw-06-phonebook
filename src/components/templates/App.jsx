@@ -1,14 +1,15 @@
+// React
 import { useState, useEffect } from 'react';
-
+// Components
 import { Header } from 'components/atoms/Header/Header';
 import { ContactForm } from 'components/organisms/ContactForm/ContactForm';
 import { ContactList } from 'components/organisms/ContactList/ContactList';
 import { Filter } from 'components/molecules/Filter/Filter';
-
+// Imported libraries
 import { nanoid } from 'nanoid';
-
+// Imported functions
 import { loadStorage, saveStorage } from 'js/localStorage';
-
+// CSS Styles
 import styles from './App.module.css';
 
 export const App = () => {
